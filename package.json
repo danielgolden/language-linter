@@ -4,6 +4,7 @@
   "description": "A linter for natural language in the style of grammarly.",
   "main": "./lib/LanguageLinter.js",
   "scripts": {
+    "prepublish": "rm -rf ./lib && npm run build",
     "build": "webpack"
   },
   "repository": {

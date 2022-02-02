@@ -2,10 +2,10 @@ import "./Components.css";
 
 import { useState } from "react";
 
-import IconArrow from "./images/icon-arrow.svg";
-import IconPlus from "./images/icon-plus.svg";
-import IconTrash from "./images/icon-trash.svg";
-import IconHelp from "./images/icon-help.svg";
+// import IconArrow from "./images/icon-arrow.svg";
+// import IconPlus from "./images/icon-plus.svg";
+// import IconTrash from "./images/icon-trash.svg";
+// import IconHelp from "./images/icon-help.svg";
 
 function Suggestion(props) {
   const {
@@ -131,7 +131,7 @@ function Suggestion(props) {
     const renderSummaryArrow = () => {
       return (
         <img
-          src={IconArrow}
+          src="blessed.jpg"
           alt="arrow icon"
           className="suggestion-summary-arrow"
         />
@@ -391,7 +391,7 @@ function Suggestion(props) {
       return (
         <button className="suggestion-cta-secondary">
           <img
-            src={IconPlus}
+            src="blessed.jpg"
             alt="plus icon"
             className="suggestion-summary-plus-icon"
           />
@@ -402,7 +402,7 @@ function Suggestion(props) {
       return (
         <a className="suggestion-cta-secondary" href={learnMoreLink}>
           <img
-            src={IconHelp}
+            src="blessed.jpg"
             alt="Help icon"
             className="suggestion-summary-help-icon"
           />
@@ -511,7 +511,7 @@ function Suggestion(props) {
           onClick={() => handleDeleteButtonClick()}
         >
           <img
-            src={IconTrash}
+            src="blessed.jpg"
             alt="Delete icon"
             className={`suggestion-summary-trash-icon`}
           />
