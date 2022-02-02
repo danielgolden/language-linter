@@ -1,6 +1,6 @@
 {
   "name": "new-relic-language-linter",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "A linter for natural language in the style of grammarly.",
   "main": "./lib/LanguageLinter.js",
   "scripts": {
@@ -25,7 +25,12 @@
   "homepage": "https://github.com/danielgolden/language-linter#readme",
   "babel": {
     "presets": [
-      ["@babel/react", {"runtime": "automatic"}],
+      [
+        "@babel/react",
+        {
+          "runtime": "automatic"
+        }
+      ],
       "@babel/env"
     ]
   },
