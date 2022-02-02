@@ -25,7 +25,7 @@
   "homepage": "https://github.com/danielgolden/language-linter#readme",
   "babel": {
     "presets": [
-      "@babel/react",
+      ["@babel/react", {"runtime": "automatic"}],
       "@babel/env"
     ]
   },
