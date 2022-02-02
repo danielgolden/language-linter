@@ -14,8 +14,8 @@ import retextEquality from "retext-equality";
 import retextSpell from "retext-spell";
 import retextUseContractions from "retext-use-contractions";
 import retextNoEmojis from "retext-no-emojis";
-import en_us_aff from "../en_aff.js";
-import en_us_dic from "../en_dic.js";
+import en_us_aff from "./en_aff.js";
+import en_us_dic from "./en_dic.js";
 import { dictionaryContents as personalDictionary } from "./personalDictionary";
 
 import "./Components.css";

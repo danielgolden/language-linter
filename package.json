@@ -2,9 +2,9 @@
   "name": "new-relic-language-linter",
   "version": "1.0.2",
   "description": "A linter for natural language in the style of grammarly.",
-  "main": "LanguageLinter.js",
+  "main": "./lib/LanguageLinter.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -22,8 +22,45 @@
     "url": "https://github.com/danielgolden/language-linter/issues"
   },
   "homepage": "https://github.com/danielgolden/language-linter#readme",
-  "peerDependancies": {
+  "babel": {
+    "presets": [
+      "@babel/react",
+      "@babel/env"
+    ]
+  },
+  "peerDependencies": {
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "dependancies": {
     "dictionary-en": "^3.1.0",
+    "react-scripts": "5.0.0",
+    "retext": "^8.1.0",
+    "retext-contractions": "^5.2.0",
+    "retext-english": "^4.1.0",
+    "retext-equality": "^6.6.0",
+    "retext-indefinite-article": "^4.1.0",
+    "retext-no-emojis": "^1.0.0",
+    "retext-passive": "^4.2.0",
+    "retext-readability": "^7.2.0",
+    "retext-repeated-words": "^4.2.0",
+    "retext-sentence-spacing": "^5.2.0",
+    "retext-spell": "^5.1.0",
+    "retext-stringify": "^3.1.0",
+    "retext-use-contractions": "^1.0.1",
+    "unified": "^10.1.1",
+    "vfile-reporter-json": "^3.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.12",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-stage-0": "^7.8.3",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.6.0",
+    "dictionary-en": "^3.1.0",
+    "path": "^0.12.7",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -41,7 +78,11 @@
     "retext-spell": "^5.1.0",
     "retext-stringify": "^3.1.0",
     "retext-use-contractions": "^1.0.1",
+    "style-loader": "^3.3.1",
     "unified": "^10.1.1",
-    "vfile-reporter-json": "^3.1.0"
+    "url-loader": "^4.1.1",
+    "vfile-reporter-json": "^3.1.0",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2"
   }
 }
