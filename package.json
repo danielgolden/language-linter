@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/newrelic/new-relic-language-linter.git"
+    "url": "git+https://github.com/danielgolden/language-linter.git"
   },
   "keywords": [
     "retext",
@@ -19,9 +19,9 @@
   "author": "Daniel Golden",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/newrelic/new-relic-language-linter/issues"
+    "url": "https://github.com/danielgolden/language-linter/issues"
   },
-  "homepage": "https://github.com/newrelic/new-relic-language-linter#readme",
+  "homepage": "https://github.com/danielgolden/language-linter#readme",
   "peerDependancies": {
     "dictionary-en": "^3.1.0",
     "prop-types": "^15.8.1",
