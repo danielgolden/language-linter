@@ -1,6 +1,6 @@
 {
   "name": "new-relic-language-linter",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A linter for natural language in the style of grammarly.",
   "main": "LanguageLinter.js",
   "scripts": {
