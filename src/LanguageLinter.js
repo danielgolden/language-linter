@@ -65,7 +65,8 @@ function LanguageLinter(props) {
   useEffect(() => {
     setTextareaChangeTimer(
       setTimeout(() => {
-        setReport(lintMyText(sampleText, setReport));
+        debugger
+        lintMyText(sampleText, setReport)
       }, updateTimer)
     );
 
