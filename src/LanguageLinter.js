@@ -21,39 +21,6 @@ import { dictionaryContents as personalDictionary } from "./personalDictionary";
 
 import "./Components.css";
 
-export function lintMyText(textToBeLinted) {
-  const retextSpellOptions = {
-    dictionary: (callback) => {
-      callback(null, {
-        aff: en_us_aff,
-        dic: en_us_dic,
-      });
-    },
-    personal: personalDictionary.join("\n"),
-    max: 5,
-  };
-
-  return retext()
-    .use(retextContractions)
-    .use(retextSpell, retextSpellOptions)
-    // It's important to use retextRepeatedWords _before_
-    // retextIndefiniteArticle. See why:
-    // https://github.com/newrelic/new-relic-language-linter/issues/2
-    .use(retextRepeatedWords)
-    .use(retextIndefiniteArticle)
-    .use(retextEquality)
-    .use(retextUseContractions)
-    .use(retextNoEmojis)
-    .use(retextReadability, { age: 19 })
-    .use(retextSentenceSpacing)
-    .use(retextPassive)
-    .use(retextStringify)
-    .process(textToBeLinted)
-    .then((report) => {
-      return(report)
-    });
-}
-
 function LanguageLinter(props) {
   const [report, setReport] = useState({});
   const [dismissedSuggestions, setDismissedSuggestions] = useState([]);
@@ -64,12 +31,45 @@ function LanguageLinter(props) {
   useEffect(() => {
     setTextareaChangeTimer(
       setTimeout(() => {
-        setReport(lintMyText(sampleText));
+        lintMyText()
       }, updateTimer)
     );
 
     return () => clearTimeout(textareaChangeTimer);
   }, [sampleText]);
+
+  const lintMyText = () => {
+    const retextSpellOptions = {
+      dictionary: (callback) => {
+        callback(null, {
+          aff: en_us_aff,
+          dic: en_us_dic,
+        });
+      },
+      personal: personalDictionary.join("\n"),
+      max: 5,
+    };
+
+    retext()
+      .use(retextContractions)
+      .use(retextSpell, retextSpellOptions)
+      // It's important to use retextRepeatedWords _before_
+      // retextIndefiniteArticle. See why:
+      // https://github.com/newrelic/new-relic-language-linter/issues/2
+      .use(retextRepeatedWords)
+      .use(retextIndefiniteArticle)
+      .use(retextEquality)
+      .use(retextUseContractions)
+      .use(retextNoEmojis)
+      .use(retextReadability, { age: 19 })
+      .use(retextSentenceSpacing)
+      .use(retextPassive)
+      .use(retextStringify)
+      .process(sampleText)
+      .then((report) => {
+        setReport(report);
+      });
+  };
 
   const renderReport = () => {
     if (report?.messages?.length > 0) {
