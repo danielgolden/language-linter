@@ -158,6 +158,7 @@ function Suggestion(props) {
             <span
               className={`suggestion-summary-replacement`}
               onClick={() => handleReplacementClick(caseSensitiveReplacement)}
+              key={index}
             >
               {caseSensitiveReplacement}
             </span>

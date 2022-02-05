@@ -76,6 +76,7 @@ function LanguageLinter(props) {
       return report.messages.map((suggestion, index) => {
         return (
           <Suggestion
+            key={index}
             suggestion={suggestion}
             sourceText={report.value}
             sampleText={sampleText}
@@ -108,7 +109,7 @@ function LanguageLinter(props) {
   return (
     <>
       {report?.messages?.length > 0 ? (
-        <li className="suggestion-list">{renderReport()}</li>
+        <ul className="suggestion-list">{renderReport()}</ul>
       ) : (
         <h3 variant="body1" className="suggestions-empty-state">
           Click "lint text" to get started
