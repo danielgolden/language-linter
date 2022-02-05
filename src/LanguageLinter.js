@@ -50,7 +50,7 @@ export function lintMyText(textToBeLinted, reportHandler) {
     .use(retextStringify)
     .process(textToBeLinted)
     .then((report) => {
-      reportHandler ? reportHandler(report) : setReport(report)
+      reportHandler(report)
       return(report)
     });
 }
@@ -65,7 +65,7 @@ function LanguageLinter(props) {
   useEffect(() => {
     setTextareaChangeTimer(
       setTimeout(() => {
-        setReport(lintMyText(sampleText));
+        setReport(lintMyText(sampleText), setReport);
       }, updateTimer)
     );
 
@@ -113,7 +113,7 @@ function LanguageLinter(props) {
         <ul className="suggestion-list">{renderReport()}</ul>
       ) : (
         <h3 variant="body1" className="suggestions-empty-state">
-          Click "lint text" to get started
+          true
         </h3>
       )}
     </>
