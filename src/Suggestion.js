@@ -484,7 +484,7 @@ function Suggestion(props) {
   };
 
   return (
-    <div
+    <li
       className={`suggestion-container ${
         isSuggestionDismissed() ? "suggestion-dismissed" : ""
       }`}
@@ -519,7 +519,7 @@ function Suggestion(props) {
           />
         </button>
       </div>
-    </div>
+    </li>
   );
 }
 
