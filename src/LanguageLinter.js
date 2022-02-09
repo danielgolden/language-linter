@@ -54,16 +54,17 @@ export function lintMyText(textToBeLinted) {
     });
 }
 
-export function hasSuggestions(sampleText) {
+export function hasSuggestion(sampleText) {
   if (typeof sampleText === 'string') {
-    return(lintMyText(sampleText))
+    const report = lintMyText(item)
+    return report.messages?.length > 0
   } else if (Array.isArray(sampleText)) {
     sampleText.filter(item => {
       const report = lintMyText(item)
-      return report.messages.length > 0
+      return report.messages?.length > 0
     })
   } else {
-    console.error('`hasSuggestions` only accepts a string or an array of strings as an argument.')
+    console.error('`hasSuggestion` only accepts a string or an array of strings as an argument.')
   }
 }
 
