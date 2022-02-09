@@ -54,6 +54,19 @@ export function lintMyText(textToBeLinted) {
     });
 }
 
+export function hasSuggestions(sampleText) {
+  if (typeOf sampleText === 'string') {
+    return(lintMyText(sampleText))
+  } else if (Array.isArray(sampleText)) {
+    sampleText.filter(item => {
+      const report = lintMyText(item)
+      return report.messages.length > 0
+    })
+  } else {
+    console.error('`hasSuggestions` only accepts a string or an array of strings as an argument.')
+  }
+}
+
 function LanguageLinter(props) {
   const [report, setReport] = useState({});
   const [dismissedSuggestions, setDismissedSuggestions] = useState([]);
