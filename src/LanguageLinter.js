@@ -21,7 +21,7 @@ import { dictionaryContents as personalDictionary } from "./personalDictionary";
 
 import "./Components.css";
 
-export function lintMyText(textToBeLinted, reportHandler) {
+export function lintMyText(textToBeLinted) {
   const retextSpellOptions = {
     dictionary: (callback) => {
       callback(null, {
@@ -50,7 +50,6 @@ export function lintMyText(textToBeLinted, reportHandler) {
     .use(retextStringify)
     .process(textToBeLinted)
     .then((report) => {
-      reportHandler(report)
       return(report)
     });
 }
@@ -65,7 +64,7 @@ function LanguageLinter(props) {
   useEffect(() => {
     setTextareaChangeTimer(
       setTimeout(() => {
-        lintMyText(sampleText, setReport)
+        setReport(lintMyText(sampleText))
       }, updateTimer)
     );
 
