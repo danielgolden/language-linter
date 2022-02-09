@@ -56,7 +56,7 @@ export function lintMyText(textToBeLinted) {
 
 export function hasSuggestion(sampleText) {
   if (typeof sampleText === 'string') {
-    const report = lintMyText(item)
+    const report = lintMyText(sampleText)
     return report.messages?.length > 0
   } else if (Array.isArray(sampleText)) {
     sampleText.filter(item => {
