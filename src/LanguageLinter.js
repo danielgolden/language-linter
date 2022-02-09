@@ -65,7 +65,6 @@ function LanguageLinter(props) {
   useEffect(() => {
     setTextareaChangeTimer(
       setTimeout(() => {
-        debugger
         lintMyText(sampleText, setReport)
       }, updateTimer)
     );
@@ -114,7 +113,7 @@ function LanguageLinter(props) {
         <ul className="suggestion-list">{renderReport()}</ul>
       ) : (
         <h3 variant="body1" className="suggestions-empty-state">
-          true
+          Select a layer(s) that contains text to get started.
         </h3>
       )}
     </>
