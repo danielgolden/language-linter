@@ -55,7 +55,7 @@ export function lintMyText(textToBeLinted) {
 }
 
 export function hasSuggestions(sampleText) {
-  if (typeOf sampleText === 'string') {
+  if (typeof sampleText === 'string') {
     return(lintMyText(sampleText))
   } else if (Array.isArray(sampleText)) {
     sampleText.filter(item => {
