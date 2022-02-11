@@ -33,6 +33,8 @@ export function lintMyText(textToBeLinted) {
     max: 5,
   };
 
+  let output = 'untouched'
+
   return retext()
     .use(retextContractions)
     .use(retextSpell, retextSpellOptions)
@@ -50,22 +52,9 @@ export function lintMyText(textToBeLinted) {
     .use(retextStringify)
     .process(textToBeLinted)
     .then((report) => {
+      output = report
       return(report)
     });
-}
-
-export function hasSuggestion(sampleText) {
-  if (typeof sampleText === 'string') {
-    const report = lintMyText(sampleText)
-    return report.messages?.length > 0
-  } else if (Array.isArray(sampleText)) {
-    sampleText.filter(item => {
-      const report = lintMyText(item)
-      return report.messages?.length > 0
-    })
-  } else {
-    console.error('`hasSuggestion` only accepts a string or an array of strings as an argument.')
-  }
 }
 
 function LanguageLinter(props) {
@@ -77,8 +66,8 @@ function LanguageLinter(props) {
 
   useEffect(() => {
     setTextareaChangeTimer(
-      setTimeout(() => {
-        setReport(lintMyText(sampleText))
+      setTimeout(async () => {
+        setReport(await lintMyText(sampleText))
       }, updateTimer)
     );
 
@@ -126,7 +115,7 @@ function LanguageLinter(props) {
         <ul className="suggestion-list">{renderReport()}</ul>
       ) : (
         <h3 variant="body1" className="suggestions-empty-state">
-          Select a layer(s) that contains text to get started.
+         Select a layer(s) that contains text to get started.
         </h3>
       )}
     </>
