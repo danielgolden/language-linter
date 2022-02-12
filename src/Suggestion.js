@@ -2,6 +2,7 @@ import "./Components.css";
 
 import * as React from "react";
 import { useState } from "react";
+import {matchCasing} from 'match-casing'
 
 import IconArrow from "./images/icon-arrow.svg";
 import IconPlus from "./images/icon-plus.svg";
@@ -16,6 +17,8 @@ function Suggestion(props) {
     setSampleText,
     removeSuggestion,
     dismissedSuggestions,
+    onClick,
+    isActive,
   } = props;
 
   const [deleteIsHovered, setDeleteIsHovered] = useState(false);
@@ -146,21 +149,18 @@ function Suggestion(props) {
         firstLetterOfOffender === firstLetterOfOffender.toUpperCase();
 
       return suggestion?.expected?.map((replacement, index) => {
-        let caseSensitiveReplacement = replacement;
+        const replacementOutput = suggestion.source === 'retext-capitalization' ?
+          suggestion.expected[index] :
+          matchCasing(replacement, suggestion.actual)
 
         if (index < maxReplacementCount) {
-          if (offenderIsUpperCase) {
-            const firstLetterOfReplacement = replacement.substring(0, 1);
-            caseSensitiveReplacement =
-              firstLetterOfReplacement.toUpperCase() + replacement.substring(1);
-          }
           return (
             <span
               className={`suggestion-summary-replacement`}
-              onClick={() => handleReplacementClick(caseSensitiveReplacement)}
+              onClick={() => handleReplacementClick(replacement)}
               key={index}
             >
-              {caseSensitiveReplacement}
+              {replacementOutput}
             </span>
           );
         }
@@ -487,8 +487,15 @@ function Suggestion(props) {
     <li
       className={`suggestion-container ${
         isSuggestionDismissed() ? "suggestion-dismissed" : ""
-      }`}
+      } ${isActive ? 'active-suggestion' : ''}`}
+      onClick={() => onClick()}
     >
+      <div className="active-suggestion-summary">
+        <span className={`suggestion-rule-severity ${ruleSeverity()}`}></span>
+        <h5 className="suggestion-rule-actual">{suggestion.actual}</h5>
+        <h6 className="suggestion-rule-label">{ruleLabel()}</h6>
+      </div>
+
       <div className="suggestion-rule-container">
         <span className={`suggestion-rule-severity ${ruleSeverity()}`}></span>
         <h6 className="suggestion-rule-label">{ruleLabel()}</h6>

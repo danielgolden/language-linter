@@ -39,8 +39,6 @@ function App() {
         value={sampleText}
       />
 
-      {handleMyThing()}
-
       <LanguageLinter 
         sampleText={sampleText} 
         setSampleText={setSampleText} 

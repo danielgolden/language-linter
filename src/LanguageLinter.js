@@ -14,6 +14,7 @@ import retextContractions from "retext-contractions";
 import retextEquality from "retext-equality";
 import retextSpell from "retext-spell";
 import retextUseContractions from "retext-use-contractions";
+import retextCapitalization from "retext-capitalization";
 import retextNoEmojis from "retext-no-emojis";
 import en_us_aff from "./en_aff.js";
 import en_us_dic from "./en_dic.js";
@@ -45,6 +46,7 @@ export function lintMyText(textToBeLinted) {
     .use(retextIndefiniteArticle)
     .use(retextEquality)
     .use(retextUseContractions)
+    .use(retextCapitalization)
     .use(retextNoEmojis)
     .use(retextReadability, { age: 19 })
     .use(retextSentenceSpacing)
@@ -61,6 +63,7 @@ function LanguageLinter(props) {
   const [report, setReport] = useState({});
   const [dismissedSuggestions, setDismissedSuggestions] = useState([]);
   const [textareaChangeTimer, setTextareaChangeTimer] = useState();
+  const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0);
 
   const { sampleText, setSampleText, updateTimer = 300 } = props;
 
@@ -86,6 +89,8 @@ function LanguageLinter(props) {
             setSampleText={setSampleText}
             removeSuggestion={removeSuggestion}
             dismissedSuggestions={dismissedSuggestions}
+            isActive={index === activeSuggestionIndex}
+            onClick={() => handleSuggestionClick(index)}
           />
         );
       });
@@ -108,6 +113,10 @@ function LanguageLinter(props) {
     // This way it stays hidden even after relint
     setDismissedSuggestions(newDismissedSuggestions);
   };
+
+  const handleSuggestionClick = (index) => {
+    setActiveSuggestionIndex(index)
+  }
 
   return (
     <>

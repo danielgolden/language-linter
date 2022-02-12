@@ -18,12 +18,70 @@ a {
   display: flex;
   gap: 10px;
   flex-direction: column;
-  padding: 16px 16px 10px;
+  padding: 16px;
   border: 1px solid #e0e0e0;
   background: #ffffff;
   box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.03);
   border-radius: 6px;
-  transition: 0.3s all ease-out;
+  transition: 0.085s all ease-out;
+  cursor: pointer;
+
+}
+
+.suggestion-container:hover {
+  transform:  translateY(-1px);
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.04);
+}
+
+.suggestion-container:active {
+  transform:  translateY(1px);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.03);
+}
+
+.suggestion-container.active-suggestion {
+  padding: 16px 16px 10px;
+  cursor:  default;
+}
+
+.suggestion-container.active-suggestion:hover,
+.suggestion-container.active-suggestion:active {
+  translate:  none;
+}
+
+
+.suggestion-container.active-suggestion:active {
+  transform:  translateY(-1px);
+}
+
+.suggestion-container:not(.active-suggestion) > *:not(.active-suggestion-summary) {
+  display:  none;
+}
+
+.suggestion-container .active-suggestion-summary {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.suggestion-rule-actual {
+  font-size:  13px;
+  color: #283636;
+  margin:  0;
+  font-weight: 400;
+}
+
+.suggestion-container.active-suggestion .active-suggestion-summary {
+  display:  none;
+}
+
+.active-suggestion-summary .suggestion-rule-label {
+  color:  rgba(0 0 0 / 50%);
+}
+
+.active-suggestion-summary .suggestion-rule-label:before {
+  content: "•";
+  margin-right:  8px;
+  color:  rgba(0 0 0 / 40%);
 }
 
 .suggestion-container.suggestion-dismissed {
@@ -57,6 +115,7 @@ a {
 }
 
 .suggestion-rule-label {
+  margin: 0;
   font-weight: normal;
   font-size: 10px;
   line-height: 135%;
@@ -158,6 +217,7 @@ a {
   font-size: 13px;
   line-height: 140%;
   color: #283636;
+  text-align: left;
 }
 
 .suggestions-ctas {

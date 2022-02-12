@@ -72,6 +72,7 @@
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.0",
     "retext": "^8.1.0",
+    "retext-capitalization": "file:../retext-capitalization",
     "retext-contractions": "^5.2.0",
     "retext-english": "^4.1.0",
     "retext-equality": "^6.6.0",
@@ -90,5 +91,8 @@
     "vfile-reporter-json": "^3.1.0",
     "webpack": "^5.68.0",
     "webpack-cli": "^4.9.2"
+  },
+  "dependencies": {
+    "match-casing": "^2.0.1"
   }
 }

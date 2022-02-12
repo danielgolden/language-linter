@@ -1,3 +1,13 @@
+html {
+  place-items: center;
+  display: grid;
+  height: 100%;
+}
+
+body {
+  max-width: 500px;
+}
+
 .App {
   text-align: center;
 }
