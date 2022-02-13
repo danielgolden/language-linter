@@ -23,7 +23,7 @@ function Suggestion(props) {
 
   const [deleteIsHovered, setDeleteIsHovered] = useState(false);
   const [tooltipTimer, setTooltipTimer] = useState();
-  const [scrollPosition, setScrollPosition] = useState('start');
+  const [scrollPosition, setScrollPosition] = useState('scroll-position-start');
 
     const summaryReplacementsRef = useRef();
 
@@ -226,8 +226,9 @@ function Suggestion(props) {
 
         {summaryType() === "replacement" && (
           <div className={`
-          suggestion-summary-replacements-container
-          ${scrollPosition}
+            suggestion-summary-replacements-container
+            ${scrollPosition}
+            ${suggestion.expected.length === 0 ? "no-replacement-container" : ''}
           `}>
             <div
               className={`

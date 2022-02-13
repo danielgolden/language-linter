@@ -202,13 +202,15 @@ a {
   display: flex;
   flex-direction: row;
   gap: 6px;
-  margin-bottom:  -10px;
-  padding: 2px 0 10px;
+  padding: 2px 0 18px;
+  margin-bottom:  -18px;
   overflow: scroll;
   white-space: nowrap;
 }
 
 .suggestion-summary-replacements-container {
+  width:  100%;
+  overflow: hidden;
   position:  relative;
   padding: 1px 0;
 }
@@ -224,6 +226,7 @@ a {
   right: 0;
   top: -1px;
   transition: opacity .075s ease-out;
+  z-index:  10;
 }
 
 .scroll-position-start:after,
@@ -242,11 +245,21 @@ a {
   left: 0;
   top: -1px;
   transition: opacity .1s ease-out;
+  z-index:  10;
 }
 
 .scroll-position-end:before,
 .scroll-position-middle:before {
   opacity:  1;
+}
+
+.no-replacement-container {
+  margin-bottom: 0;
+}
+
+.no-replacement-container:before,
+.no-replacement-container:after {
+  opacity: 0;
 }
 
 .suggestion-summary-replacements.no-replacement {
