@@ -202,6 +202,51 @@ a {
   display: flex;
   flex-direction: row;
   gap: 6px;
+  margin-bottom:  -10px;
+  padding: 2px 0 10px;
+  overflow: scroll;
+  white-space: nowrap;
+}
+
+.suggestion-summary-replacements-container {
+  position:  relative;
+  padding: 1px 0;
+}
+
+.suggestion-summary-replacements-container:after {
+  opacity: 0;
+  pointer-events: none;
+  content: "";
+  height: 110%;
+  width: 30px;
+  background-image: linear-gradient(to right, rgba(255 255 255 / 0),  #fff );
+  position: absolute;
+  right: 0;
+  top: -1px;
+  transition: opacity .075s ease-out;
+}
+
+.scroll-position-start:after,
+.scroll-position-middle:after {
+  opacity:  1;
+}
+
+.suggestion-summary-replacements-container:before {
+  opacity: 0;
+  pointer-events: none;
+  content: "";
+  height: 110%;
+  width: 30px;
+  background-image: linear-gradient(to left, rgba(255 255 255 / 0),  #fff );
+  position: absolute;
+  left: 0;
+  top: -1px;
+  transition: opacity .1s ease-out;
+}
+
+.scroll-position-end:before,
+.scroll-position-middle:before {
+  opacity:  1;
 }
 
 .suggestion-summary-replacements.no-replacement {

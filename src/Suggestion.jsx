@@ -1,7 +1,7 @@
 import "./Components.css";
 
 import * as React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {matchCasing} from 'match-casing'
 
 import IconArrow from "./images/icon-arrow.svg";
@@ -23,6 +23,9 @@ function Suggestion(props) {
 
   const [deleteIsHovered, setDeleteIsHovered] = useState(false);
   const [tooltipTimer, setTooltipTimer] = useState();
+  const [scrollPosition, setScrollPosition] = useState('start');
+
+    const summaryReplacementsRef = useRef();
 
   const suggestionHasExpected = !!suggestion?.expected;
 
@@ -78,7 +81,7 @@ function Suggestion(props) {
 
   const ruleLabel = () => {
     let ruleLabel = "Suggestion";
-    debugger
+
     switch (suggestion.source) {
       case "retext-spell":
         ruleLabel = "Spelling";
@@ -199,20 +202,44 @@ function Suggestion(props) {
       }
     };
 
+    const onScroll = () => {
+      if (summaryReplacementsRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = summaryReplacementsRef.current;
+        if (scrollLeft + clientWidth >= scrollWidth) {
+          setScrollPosition("scroll-position-end");
+        } else if (scrollLeft === 0) {
+          setScrollPosition("scroll-position-start");
+        } else {
+          setScrollPosition("scroll-position-middle");
+        }
+      }
+    };
+
     return (
-      <div className={`suggestion-summary-container summary-${summaryType()}`}>
+      <div className={`
+        suggestion-summary-container 
+        summary-${summaryType()}
+      `}>
         {summaryType() === "replacement" && renderSummaryCurrent()}
         {summaryType() === "removal" && renderSummaryCurrent()}
         {summaryType() === "replacement" && renderSummaryArrow()}
 
         {summaryType() === "replacement" && (
-          <div
-            className={`suggestion-summary-replacements ${
-              suggestion.expected.length === 0 ? "no-replacement" : ""
-            }`}
-          >
-            {renderSummaryReplacement()}
-            {suggestion.expected.length === 0 && "?"}
+          <div className={`
+          suggestion-summary-replacements-container
+          ${scrollPosition}
+          `}>
+            <div
+              className={`
+                suggestion-summary-replacements 
+                ${suggestion.expected.length === 0 ? "no-replacement" : ''}
+              `}
+              onScroll={() => onScroll()}
+              ref={summaryReplacementsRef}
+            >
+              {renderSummaryReplacement()}
+              {suggestion.expected.length === 0 && "?"}
+            </div>
           </div>
         )}
 
