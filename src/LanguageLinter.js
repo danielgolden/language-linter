@@ -95,7 +95,7 @@ function LanguageLinter(props) {
         );
       });
     } else {
-      return <h4>No suggestions to show...</h4>;
+      return <h4>No suggestions to show...</h4>
     }
   };
 
