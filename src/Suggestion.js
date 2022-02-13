@@ -78,7 +78,7 @@ function Suggestion(props) {
 
   const ruleLabel = () => {
     let ruleLabel = "Suggestion";
-
+    debugger
     switch (suggestion.source) {
       case "retext-spell":
         ruleLabel = "Spelling";
@@ -107,6 +107,9 @@ function Suggestion(props) {
         break;
       case "retext-no-emojis":
         ruleLabel = "Consistent style";
+        break;
+      case "retext-capitalization":
+        ruleLabel = "Capitalization";
         break;
       default:
         return ruleLabel;
@@ -331,6 +334,13 @@ function Suggestion(props) {
             to rewrite your message until it achieves your goal.
           </>
         );
+      case "retext-capitalization":
+        return (
+          <>
+            It looks like {highlightText(suggestion.actual)} isn't properly capitalized.
+            Try {highlightText(suggestion.expected[0])} instead.
+          </>
+        );
       default:
         return "Uh oh";
     }
@@ -383,6 +393,10 @@ function Suggestion(props) {
       case "retext-no-emojis":
         learnMoreLink =
           "https://one-core.datanerd.us/foundation/design/writing/emojis/";
+        break;
+      case "retext-capitalization":
+        learnMoreLink =
+          "https://docs.newrelic.com/docs/style-guide/capitalization/product-capability-feature-usage/#when-to-use-title-case";
         break;
       default:
         learnMoreLink =
