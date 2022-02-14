@@ -65,7 +65,12 @@ function LanguageLinter(props) {
   const [textareaChangeTimer, setTextareaChangeTimer] = useState();
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0);
 
-  const { sampleText, setSampleText, updateTimer = 300 } = props;
+  const { 
+    sampleText, 
+    setSampleText, 
+    updateTimer = 300,
+    placeholder = 'Provide some text to get started'
+  } = props;
 
   useEffect(() => {
     setTextareaChangeTimer(
@@ -118,14 +123,40 @@ function LanguageLinter(props) {
     setActiveSuggestionIndex(index)
   }
 
+  const renderPlaceholder = () => {
+    const sampleTextProvided = sampleText !== ''
+    const suggestionsAvailable = report?.messages?.length > 0
+
+    if (!sampleTextProvided) {
+      return(
+        <h3 className="empty-state-heading">
+         {placeholder}
+        </h3>
+      )
+    } else if (sampleTextProvided && !suggestionsAvailable) {
+      return(
+        <>
+          <h3 className="empty-state-heading">
+           No issues found
+          </h3>
+          <p className="empty-state-description">
+            We ran several checks on your text and found no writing issues.
+            Think we missed something? {` `}
+            <a href="https://newrelic.slack.com/archives/C01A76P3DPU">Let us know</a>.
+          </p>
+        </>
+      )
+    }
+  }
+
   return (
     <>
       {report?.messages?.length > 0 ? (
         <ul className="suggestion-list">{renderReport()}</ul>
       ) : (
-        <h3 variant="body1" className="suggestions-empty-state">
-         Select a layer(s) that contains text to get started.
-        </h3>
+        <div className="suggestions-empty-state">
+          {renderPlaceholder()}
+        </div>
       )}
     </>
   );
@@ -133,6 +164,7 @@ function LanguageLinter(props) {
 
 LanguageLinter.propTypes = {
   sampleText: PropTypes.string,
+  placeholder: PropTypes.string,
   setSampleText: PropTypes.func,
   updateTimer: PropTypes.number,
 };
