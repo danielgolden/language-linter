@@ -27,8 +27,6 @@ function App() {
   }
 
 
-
-
   return (
     <div className="App">
       <textarea 
@@ -39,9 +37,8 @@ function App() {
       <LanguageLinter 
         sampleText={sampleText} 
         setSampleText={setSampleText} 
+        placeholder={"Enter some text to get started"}
       />
-
-      <p>{sampleText}</p>
     </div>
   )
 }
