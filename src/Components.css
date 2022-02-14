@@ -352,6 +352,7 @@ a {
   color: rgba(0, 0, 0, 0.76);
   border: 2px solid rgba(0, 0, 0, 0.05);
   border-radius: 8px;
+  text-align: center;
 }
 
 .empty-state-heading {
