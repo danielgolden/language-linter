@@ -1,6 +1,4 @@
 const path = require('path');
-const nodeExternals = require('@newrelic/webpack-plugin/lib/externals')
-const NewrelicWebpackPlugin = require('@newrelic/webpack-plugin/lib/NewrelicWebpackPlugin')
 
 module.exports = {
   mode: 'production',
@@ -39,25 +37,19 @@ module.exports = {
       'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
     }
   },
-  externals: [
-    {
-      // Don't bundle react or react-dom      
-      react: {
-        commonjs: "react",
-        commonjs2: "react",
-        amd: "React",
-        root: "React"
-      },
-      "react-dom": {
-        commonjs: "react-dom",
-        commonjs2: "react-dom",
-        amd: "ReactDOM",
-        root: "ReactDOM"
-      }, 
+  externals: {
+    // Don't bundle react or react-dom      
+    react: {
+      commonjs: "react",
+      commonjs2: "react",
+      amd: "React",
+      root: "React"
     },
-    nodeExternals()
-  ],
-  plugins: [
-    new NewrelicWebpackPlugin()
-  ]
+    "react-dom": {
+      commonjs: "react-dom",
+      commonjs2: "react-dom",
+      amd: "ReactDOM",
+      root: "ReactDOM"
+    }, 
+  }
 };
