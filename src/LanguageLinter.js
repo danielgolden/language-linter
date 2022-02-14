@@ -123,6 +123,24 @@ function LanguageLinter(props) {
     setActiveSuggestionIndex(index)
   }
 
+  const availableSuggestionsHidden = () => {
+    const suggestionsAvailable = report?.messages?.length > 0
+    let output = false
+
+    if (suggestionsAvailable) {
+      // for every suggestion
+      report.messages.forEach((message) => {
+        // does it's id match any of the dismissed suggestions
+        dismissedSuggestions.some(dismissedSuggestion => {
+          dismissedSuggestion !== message.name
+          output = true
+        })
+      })
+
+      return output
+    }
+  }
+
   const renderPlaceholder = () => {
     const sampleTextProvided = sampleText !== ''
     const suggestionsAvailable = report?.messages?.length > 0
@@ -133,7 +151,7 @@ function LanguageLinter(props) {
          {placeholder}
         </h3>
       )
-    } else if (sampleTextProvided && !suggestionsAvailable) {
+    } else if ((sampleTextProvided && !suggestionsAvailable) || (availableSuggestionsHidden() && sampleTextProvided)) {
       return(
         <>
           <h3 className="empty-state-heading">
@@ -151,6 +169,7 @@ function LanguageLinter(props) {
 
   return (
     <>
+      {availableSuggestionsHidden()}
       {report?.messages?.length > 0 ? (
         <ul className="suggestion-list">{renderReport()}</ul>
       ) : (

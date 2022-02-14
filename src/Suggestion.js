@@ -25,7 +25,7 @@ function Suggestion(props) {
   const [tooltipTimer, setTooltipTimer] = useState();
   const [scrollPosition, setScrollPosition] = useState('scroll-position-start');
 
-    const summaryReplacementsRef = useRef();
+  const summaryReplacementsRef = useRef();
 
   const suggestionHasExpected = !!suggestion?.expected;
 
@@ -199,19 +199,6 @@ function Suggestion(props) {
           return `Difficult sentence to read`;
         default:
           return "Suggestion";
-      }
-    };
-
-    const onScroll = () => {
-      if (summaryReplacementsRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = summaryReplacementsRef.current;
-        if (scrollLeft + clientWidth >= scrollWidth) {
-          setScrollPosition("scroll-position-end");
-        } else if (scrollLeft === 0) {
-          setScrollPosition("scroll-position-start");
-        } else {
-          setScrollPosition("scroll-position-middle");
-        }
       }
     };
 
@@ -523,6 +510,19 @@ function Suggestion(props) {
     return dismissedSuggestions.some((dismissedSuggestionId) => {
       return dismissedSuggestionId === suggestion.name;
     });
+  };
+
+  const onScroll = () => {
+    if (summaryReplacementsRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = summaryReplacementsRef.current;
+      if (scrollLeft === 0) {
+        setScrollPosition("scroll-position-start");
+      } else if (scrollLeft + clientWidth >= scrollWidth) {
+        setScrollPosition("scroll-position-end");
+      } else {
+        setScrollPosition("scroll-position-middle");
+      }
+    }
   };
 
   return (

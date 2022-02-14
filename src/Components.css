@@ -149,6 +149,7 @@ a {
   text-decoration: line-through;
   color: #df2d24;
   text-align: left;
+  white-space: nowrap;
 }
 
 .suggestion-summary-current-text {
@@ -207,10 +208,12 @@ a {
   display: flex;
   flex-direction: row;
   gap: 6px;
-  padding: 2px 0 18px;
-  margin-bottom:  -18px;
+  padding: 1px 0 18px;
+  margin-bottom:  -19px;
   overflow: scroll;
   white-space: nowrap;
+  position: relative;
+  bottom: 1px;
 }
 
 .suggestion-summary-replacements.no-replacement {
