@@ -4,7 +4,7 @@ import LanguageLinter, { lintMyText } from 'new-relic-language-linter/src/Langua
 import './App.css'
 
 function App() {
-  const [sampleText, setSampleText] = useState('The best NR1 feature is probably Dashboards or instant observability. I really love new rasdfasdfelic');
+  const [sampleText, setSampleText] = useState('This is the greatest I am I dog New Relic I/O');
   const [blessed, setBlessed] = useState('');
 
   const handleTextAreaOnChange = (event) => {
