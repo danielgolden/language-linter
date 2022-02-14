@@ -94,6 +94,8 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "match-casing": "^2.0.1"
+    "@cerwym/newrelic-webpack-plugin": "^1.2.0",
+    "match-casing": "^2.0.1",
+    "newrelic": "^8.7.1"
   }
 }

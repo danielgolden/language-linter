@@ -1,7 +1,9 @@
 const path = require('path');
+const { NewrelicWebpackPlugin } = require('@cerwym/newrelic-webpack-plugin');
 
 module.exports = {
   mode: 'production',
+  plugins: [ new NewrelicWebpackPlugin({verbose: false})],
   entry: './src/LanguageLinter.js',
   output: {
     path: path.resolve('lib'),
