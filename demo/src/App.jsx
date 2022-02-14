@@ -4,15 +4,12 @@ import LanguageLinter, { lintMyText } from 'new-relic-language-linter/src/Langua
 import './App.css'
 
 function App() {
-  const [sampleText, setSampleText] = useState('');
+  const [sampleText, setSampleText] = useState('The best NR1 feature is probably Dashboards or instant observability. I really love new rasdfasdfelic');
   const [blessed, setBlessed] = useState('');
 
   const handleTextAreaOnChange = (event) => {
     setSampleText(event.target.value);
   };
-
-  const sampleTextExamples = ['I should be alright.', 'I certianly have problme.s', 'I am the classig dog with a problem.'];
-  let samplesWithProblems = []
 
   const asyncFilter = async (arr, callback) => {
     const fail = Symbol()
