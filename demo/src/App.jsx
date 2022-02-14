@@ -26,7 +26,6 @@ function App() {
     console.log(results);
   }
 
-
   return (
     <div className="App">
       <textarea 

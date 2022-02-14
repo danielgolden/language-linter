@@ -19,6 +19,7 @@ function Suggestion(props) {
     dismissedSuggestions,
     onClick,
     isActive,
+    addToDictionary,
   } = props;
 
   const [deleteIsHovered, setDeleteIsHovered] = useState(false);
@@ -426,7 +427,10 @@ function Suggestion(props) {
             alt="plus icon"
             className="suggestion-summary-plus-icon"
           />
-          <span className="suggestion-cta-label">Add to dictionary</span>
+          <span 
+            className="suggestion-cta-label"
+            onClick={() => addToDictionary(suggestion.actual, suggestion.name)}
+          >Add to dictionary</span>
         </button>
       );
     } else {

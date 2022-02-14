@@ -23,6 +23,14 @@ import { dictionaryContents as personalDictionary } from "./personalDictionary";
 import "./Components.css";
 
 export function lintMyText(textToBeLinted) {
+  let customDictionary = personalDictionary
+
+  if (window?.localStorage?.languageLinterCustomDictionary) {
+    const customLocalDictionary = JSON.parse(window.localStorage.languageLinterCustomDictionary)
+    
+    customDictionary.push(...customLocalDictionary)
+  }
+
   const retextSpellOptions = {
     dictionary: (callback) => {
       callback(null, {
@@ -30,7 +38,7 @@ export function lintMyText(textToBeLinted) {
         dic: en_us_dic,
       });
     },
-    personal: personalDictionary.join("\n"),
+    personal: customDictionary.join('\n'),
     max: 5,
   };
 
@@ -96,6 +104,7 @@ function LanguageLinter(props) {
             dismissedSuggestions={dismissedSuggestions}
             isActive={index === activeSuggestionIndex}
             onClick={() => handleSuggestionClick(index)}
+            addToDictionary={addToDictionary}
           />
         );
       });
@@ -139,6 +148,23 @@ function LanguageLinter(props) {
 
       return output
     }
+  }
+
+  const addToDictionary = (wordToAdd, suggestionId) => {
+    let languageLinterCustomDictionary = window.localStorage?.languageLinterCustomDictionary
+
+    // if the local storage variable already exists
+    if (languageLinterCustomDictionary) {
+      let tempDictionaryStorage = JSON.parse(window.localStorage.languageLinterCustomDictionary)
+
+      tempDictionaryStorage.push(wordToAdd)
+      window.localStorage.setItem('languageLinterCustomDictionary', JSON.stringify(tempDictionaryStorage))
+    } else {
+      // if not
+      window.localStorage.setItem('languageLinterCustomDictionary', JSON.stringify([wordToAdd]))
+    }
+
+    removeSuggestion(suggestionId)
   }
 
   const renderPlaceholder = () => {
