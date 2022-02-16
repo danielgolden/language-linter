@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import logo from './logo.svg'
-import LanguageLinter, { lintMyText } from 'new-relic-language-linter'
+import LanguageLinter, { lintMyText } from 'new-relic-language-linter/src/LanguageLinter'
 import './App.css'
 
 function App() {

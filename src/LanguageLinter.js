@@ -29,7 +29,7 @@ export function lintMyText(textToBeLinted, customLocalDictionary) {
     if (window?.localStorage?.languageLinterCustomDictionary) {
       customLocalDictionary = JSON.parse(window.localStorage?.languageLinterCustomDictionary)
     } else {
-      return []
+      customLocalDictionary = []
     }
   }
     
