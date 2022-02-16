@@ -203,12 +203,18 @@ a {
   display: flex;
   flex-direction: row;
   gap: 6px;
-  padding: 1px 0 1px;
-  margin-bottom: -17px;
-  overflow-x: scroll;
+  padding: 1px 0 18px;
+  margin-bottom:  -19px;
+  overflow: scroll;
   white-space: nowrap;
   position: relative;
   bottom: 1px;
+}
+
+
+.suggestion-summary-replacements::-webkit-scrollbar {
+  -webkit-appearance: none;
+  display:  none;
 }
 
 .suggestion-summary-replacements.no-replacement {

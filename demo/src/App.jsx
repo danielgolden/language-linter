@@ -60,8 +60,7 @@ function App() {
         sampleText={sampleText} 
         setSampleText={setSampleText} 
         placeholder={"Enter some text to get started"}
-        addToDictionary={myAddToDictionary}
-        // customDictionary={customDictionary()}
+        // addToDictionary={myAddToDictionary}
       />
     </div>
   )
