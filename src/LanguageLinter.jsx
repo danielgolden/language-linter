@@ -22,14 +22,18 @@ import { dictionaryContents as personalDictionary } from "./personalDictionary";
 
 import "./Components.css";
 
-export function lintMyText(textToBeLinted) {
+export function lintMyText(textToBeLinted, customLocalDictionary) {
   let customDictionary = personalDictionary
 
-  if (window?.localStorage?.languageLinterCustomDictionary) {
-    const customLocalDictionary = JSON.parse(window.localStorage.languageLinterCustomDictionary)
-    
-    customDictionary.push(...customLocalDictionary)
+  if (!customLocalDictionary) {
+    if (window?.localStorage?.languageLinterCustomDictionary) {
+      customLocalDictionary = JSON.parse(window.localStorage?.languageLinterCustomDictionary)
+    } else {
+      return []
+    }
   }
+    
+  customDictionary.push(...customLocalDictionary)
 
   const retextSpellOptions = {
     dictionary: (callback) => {
@@ -77,13 +81,15 @@ function LanguageLinter(props) {
     sampleText, 
     setSampleText, 
     updateTimer = 300,
-    placeholder = 'Provide some text to get started'
+    placeholder = 'Provide some text to get started',
+    customDictionary, 
+    addToDictionary,
   } = props;
 
   useEffect(() => {
     setTextareaChangeTimer(
       setTimeout(async () => {
-        setReport(await lintMyText(sampleText))
+        setReport(await lintMyText(sampleText, customDictionary))
       }, updateTimer)
     );
 
@@ -104,7 +110,7 @@ function LanguageLinter(props) {
             dismissedSuggestions={dismissedSuggestions}
             isActive={index === activeSuggestionIndex}
             onClick={() => handleSuggestionClick(index)}
-            addToDictionary={addToDictionary}
+            addToDictionary={addToDictionary ? addToDictionary : defaultAddToDictionary}
           />
         );
       });
@@ -150,7 +156,7 @@ function LanguageLinter(props) {
     }
   }
 
-  const addToDictionary = (wordToAdd, suggestionId) => {
+  const defaultAddToDictionary = (wordToAdd, suggestionId) => {
     let languageLinterCustomDictionary = window.localStorage?.languageLinterCustomDictionary
 
     // if the local storage variable already exists

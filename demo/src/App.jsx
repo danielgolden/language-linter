@@ -26,6 +26,29 @@ function App() {
     console.log(results);
   }
 
+  const myAddToDictionary = (wordToAdd, suggestionId) => {
+    let languageLinterCustomDictionary = window.localStorage?.languageLinterCustomDictionary
+
+    // if the local storage variable already exists
+    if (languageLinterCustomDictionary) {
+      let tempDictionaryStorage = JSON.parse(window.localStorage.languageLinterCustomDictionary)
+
+      tempDictionaryStorage.push(wordToAdd)
+      window.localStorage.setItem('languageLinterCustomDictionary', JSON.stringify(tempDictionaryStorage))
+    } else {
+      // if not
+      window.localStorage.setItem('languageLinterCustomDictionary', JSON.stringify([wordToAdd]))
+    }
+  }
+
+  const customDictionary = () => {
+    if (window?.localStorage?.languageLinterCustomDictionary) {
+      return JSON.parse(window.localStorage?.languageLinterCustomDictionary)
+    } else {
+      return []
+    }
+  }
+
   return (
     <div className="App">
       <textarea 
@@ -37,6 +60,8 @@ function App() {
         sampleText={sampleText} 
         setSampleText={setSampleText} 
         placeholder={"Enter some text to get started"}
+        addToDictionary={myAddToDictionary}
+        // customDictionary={customDictionary()}
       />
     </div>
   )

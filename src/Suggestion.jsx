@@ -429,7 +429,7 @@ function Suggestion(props) {
           />
           <span 
             className="suggestion-cta-label"
-            onClick={() => addToDictionary(suggestion.actual, suggestion.name)}
+            onClick={() => handleAddToDictionaryClick()}
           >Add to dictionary</span>
         </button>
       );
@@ -528,6 +528,11 @@ function Suggestion(props) {
       }
     }
   };
+
+  const handleAddToDictionaryClick = () => {
+    addToDictionary(suggestion.actual, suggestion.name);
+    removeSuggestion(suggestion.name);
+  }
 
   return (
     <li

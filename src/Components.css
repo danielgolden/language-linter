@@ -213,6 +213,7 @@ a {
 
 .suggestion-summary-replacements.no-replacement {
   margin-bottom:  0;
+  overflow: auto;
 }
 
 .suggestion-summary-replacements-container {
