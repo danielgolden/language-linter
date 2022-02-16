@@ -52,11 +52,6 @@ a {
   transform:  none;
 }
 
-
-.suggestion-container.active-suggestion:active {
-  transform:  translateY(-1px);
-}
-
 .suggestion-container:not(.active-suggestion) > *:not(.active-suggestion-summary) {
   display:  none;
 }
@@ -208,9 +203,9 @@ a {
   display: flex;
   flex-direction: row;
   gap: 6px;
-  padding: 1px 0 18px;
-  margin-bottom:  -19px;
-  overflow: scroll;
+  padding: 1px 0 1px;
+  margin-bottom: -17px;
+  overflow-x: scroll;
   white-space: nowrap;
   position: relative;
   bottom: 1px;

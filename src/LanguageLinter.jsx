@@ -212,6 +212,8 @@ LanguageLinter.propTypes = {
   placeholder: PropTypes.string,
   setSampleText: PropTypes.func,
   updateTimer: PropTypes.number,
+  customDictionary: PropTypes.array,
+  addToDictionary: PropTypes.func,
 };
 
 export default LanguageLinter;
