@@ -19,6 +19,7 @@ import retextNoEmojis from "retext-no-emojis";
 import en_us_aff from "./en_aff.js";
 import en_us_dic from "./en_dic.js";
 import { dictionaryContents as personalDictionary } from "./personalDictionary";
+import spinner from "./images/tail-spin.svg"
 
 import "./Components.css";
 
@@ -29,7 +30,7 @@ export function lintMyText(textToBeLinted, customLocalDictionary) {
     if (window?.localStorage?.languageLinterCustomDictionary) {
       customLocalDictionary = JSON.parse(window.localStorage?.languageLinterCustomDictionary)
     } else {
-      return []
+      customLocalDictionary = []
     }
   }
     
@@ -75,6 +76,8 @@ function LanguageLinter(props) {
   const [report, setReport] = useState({});
   const [dismissedSuggestions, setDismissedSuggestions] = useState([]);
   const [textareaChangeTimer, setTextareaChangeTimer] = useState();
+  const [loadingResultsTimer, setLoadingResultsTimer] = useState();
+  const [isLoading, setIsLoading] = useState();
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0);
 
   const { 
@@ -94,6 +97,18 @@ function LanguageLinter(props) {
     );
 
     return () => clearTimeout(textareaChangeTimer);
+  }, [sampleText]);
+
+  useEffect(() => {
+    setIsLoading(true)
+
+    setLoadingResultsTimer(
+      setTimeout(async () => {
+        setIsLoading(false)
+      }, 4000)
+    );
+
+    return () => clearTimeout(loadingResultsTimer);
   }, [sampleText]);
 
   const renderReport = () => {
@@ -183,6 +198,8 @@ function LanguageLinter(props) {
          {placeholder}
         </h3>
       )
+    } else if (isLoading) {
+      return(<img className="loading-spinner" src={spinner} alt="loading..." />)
     } else if ((sampleTextProvided && !suggestionsAvailable) || (availableSuggestionsHidden() && sampleTextProvided)) {
       return(
         <>

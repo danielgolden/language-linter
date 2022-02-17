@@ -6,6 +6,10 @@ a {
   color: #0064c9;
 }
 
+/*.loading-spinner {
+  background-color: blue;
+}*/
+
 .suggestion-list {
   display: flex;
   flex-direction: column;
