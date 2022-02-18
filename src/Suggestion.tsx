@@ -2,14 +2,27 @@ import "./Components.css";
 
 import * as React from "react";
 import { useState, useRef } from "react";
-import {matchCasing} from 'match-casing'
+import { matchCasing } from 'match-casing'
+import type * as types from "../custom-types"
 
 import IconArrow from "./images/icon-arrow.svg";
 import IconPlus from "./images/icon-plus.svg";
 import IconTrash from "./images/icon-trash.svg";
 import IconHelp from "./images/icon-help.svg";
 
-function Suggestion(props) {
+interface props {
+  suggestion: types.message,
+  sampleText: string,
+  sourceText: string,
+  dismissedSuggestions: string[],
+  onClick: () => void,
+  removeSuggestion: (stringId: string) => void,
+  setSampleText: (newSampleText: string) => void,
+  isActive: boolean,
+  addToDictionary: (wordToAdd: string, id: string) => string[]
+}
+
+function Suggestion(props: props) {
   const {
     suggestion,
     sourceText,
@@ -23,10 +36,10 @@ function Suggestion(props) {
   } = props;
 
   const [deleteIsHovered, setDeleteIsHovered] = useState(false);
-  const [tooltipTimer, setTooltipTimer] = useState();
+  const [tooltipTimer, setTooltipTimer] = useState(0);
   const [scrollPosition, setScrollPosition] = useState('scroll-position-start');
 
-  const summaryReplacementsRef = useRef();
+  const summaryReplacementsRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const suggestionHasExpected = !!suggestion?.expected;
 
@@ -130,7 +143,7 @@ function Suggestion(props) {
       return (
         <div
           className="suggestion-summary-current"
-          onClick={summaryCurrentOnClick}
+          onClick={() => summaryCurrentOnClick}
         >
           <span className="suggestion-summary-current-text">
             {suggestion.actual}
@@ -238,7 +251,7 @@ function Suggestion(props) {
   };
 
   const renderSuggestionDescriptionText = () => {
-    const highlightText = (string) => {
+    const highlightText = (string: string[] | string) => {
       return (
         <strong>
           <em>{string}</em>
@@ -284,7 +297,7 @@ function Suggestion(props) {
       case "retext-sentence-spacing":
         return (
           <>
-            It appears that you used {highlightText(suggestion.actual.length)}
+            It appears that you used {highlightText(suggestion.actual.length.toString())}
             {` `} spaces before your sentence. At New Relic, we use 1 space.
           </>
         );
@@ -371,9 +384,9 @@ function Suggestion(props) {
         break;
       case "retext-contractions":
         learnMoreLink = "https://github.com/retextjs/retext-contractions#use";
-        if (suggestion.ruleID === "missing-smart-apostrophe") {
+        if (suggestion.ruleId === "missing-smart-apostrophe") {
           learnMoreLink = "https://www.grammarbook.com/punctuation/apostro.asp";
-        } else if (suggestion.ruleID === "smart-apostrophe") {
+        } else if (suggestion.ruleId === "smart-apostrophe") {
           learnMoreLink =
             "https://practicaltypography.com/straight-and-curly-quotes.html";
         }
@@ -447,12 +460,12 @@ function Suggestion(props) {
     }
   };
 
-  const handleReplacementClick = (caseSensitiveReplacement) => {
+  const handleReplacementClick = (caseSensitiveReplacement: string) => {
     const suggestionStart = suggestion.position.start.offset;
     const suggestionEnd = suggestion.position.end.offset;
     const textBeforeOffender = sampleText.substring(0, suggestionStart);
     const textAfterOffender = sampleText.substring(suggestionEnd);
-    let newSampleText = [
+    let newSampleText: string[] | string = [
       textBeforeOffender,
       caseSensitiveReplacement,
       textAfterOffender,
@@ -484,7 +497,7 @@ function Suggestion(props) {
       );
     }
 
-    let newSampleText = [textBeforeOffender, textAfterOffender];
+    let newSampleText: string[] | string = [textBeforeOffender, textAfterOffender];
 
     newSampleText = newSampleText.join("");
 
@@ -493,7 +506,7 @@ function Suggestion(props) {
 
   const handleDeleteButtonMouseEnter = () => {
     setTooltipTimer(
-      setTimeout(() => {
+      window.setTimeout(() => {
         setDeleteIsHovered(true);
       }, 500)
     );

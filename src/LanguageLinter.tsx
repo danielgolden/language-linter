@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import Suggestion from "./Suggestion";
 
 import { retext } from "retext";
@@ -13,17 +12,24 @@ import retextPassive from "retext-passive";
 import retextContractions from "retext-contractions";
 import retextEquality from "retext-equality";
 import retextSpell from "retext-spell";
+// @ts-ignore
 import retextUseContractions from "retext-use-contractions";
+// @ts-ignore
 import retextCapitalization from "retext-capitalization";
+// @ts-ignore
 import retextNoEmojis from "retext-no-emojis";
 import en_us_aff from "./en_aff.js";
 import en_us_dic from "./en_dic.js";
 import { dictionaryContents as personalDictionary } from "./personalDictionary";
+// @ts-ignore
 import spinner from "./images/tail-spin.svg"
+import type * as types from "../custom-types"
 
 import "./Components.css";
 
-export function lintMyText(textToBeLinted, customLocalDictionary) {
+console.log('Im a blessing');
+
+export function lintMyText(textToBeLinted: string, customLocalDictionary: string[]) {
   let customDictionary = personalDictionary
 
   if (!customLocalDictionary) {
@@ -37,7 +43,7 @@ export function lintMyText(textToBeLinted, customLocalDictionary) {
   customDictionary.push(...customLocalDictionary)
 
   const retextSpellOptions = {
-    dictionary: (callback) => {
+    dictionary: (callback: any) => {
       callback(null, {
         aff: en_us_aff,
         dic: en_us_dic,
@@ -46,8 +52,6 @@ export function lintMyText(textToBeLinted, customLocalDictionary) {
     personal: customDictionary.join('\n'),
     max: 5,
   };
-
-  let output = 'untouched'
 
   return retext()
     .use(retextContractions)
@@ -67,17 +71,26 @@ export function lintMyText(textToBeLinted, customLocalDictionary) {
     .use(retextStringify)
     .process(textToBeLinted)
     .then((report) => {
-      output = report
+      console.log(report);
       return(report)
     });
 }
 
-function LanguageLinter(props) {
-  const [report, setReport] = useState({});
-  const [dismissedSuggestions, setDismissedSuggestions] = useState([]);
-  const [textareaChangeTimer, setTextareaChangeTimer] = useState();
-  const [loadingResultsTimer, setLoadingResultsTimer] = useState();
-  const [isLoading, setIsLoading] = useState();
+export interface props {
+  sampleText: string,
+  placeholder: string,
+  setSampleText: () => void,
+  updateTimer: number,
+  customDictionary: string[],
+  addToDictionary: () => string[]
+}
+
+function LanguageLinter(props: props) {
+  const [report, setReport] = useState<types.report>();
+  const [dismissedSuggestions, setDismissedSuggestions] = useState<Array<string>>(['']);
+  const [textareaChangeTimer, setTextareaChangeTimer] = useState(0);
+  const [loadingResultsTimer, setLoadingResultsTimer] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0);
 
   const { 
@@ -91,8 +104,8 @@ function LanguageLinter(props) {
 
   useEffect(() => {
     setTextareaChangeTimer(
-      setTimeout(async () => {
-        setReport(await lintMyText(sampleText, customDictionary))
+      window.setTimeout(async () => {
+        setReport(await lintMyText(sampleText, customDictionary) as any)
       }, updateTimer)
     );
 
@@ -103,7 +116,7 @@ function LanguageLinter(props) {
     setIsLoading(true)
 
     setLoadingResultsTimer(
-      setTimeout(async () => {
+      window.setTimeout(async () => {
         setIsLoading(false)
       }, 4000)
     );
@@ -112,20 +125,20 @@ function LanguageLinter(props) {
   }, [sampleText]);
 
   const renderReport = () => {
-    if (report?.messages?.length > 0) {
-      return report.messages.map((suggestion, index) => {
+    if (suggestionsAvailable()) {
+      return report?.messages.map((suggestion, index) => {
         return (
           <Suggestion
             key={index}
             suggestion={suggestion}
-            sourceText={report.value}
+            sourceText={report?.value}
             sampleText={sampleText}
             setSampleText={setSampleText}
             removeSuggestion={removeSuggestion}
             dismissedSuggestions={dismissedSuggestions}
             isActive={index === activeSuggestionIndex}
             onClick={() => handleSuggestionClick(index)}
-            addToDictionary={addToDictionary ? addToDictionary : defaultAddToDictionary}
+            addToDictionary={addToDictionary ?? defaultAddToDictionary}
           />
         );
       });
@@ -134,32 +147,31 @@ function LanguageLinter(props) {
     }
   };
 
-  const removeSuggestion = (suggestionId) => {
+  const removeSuggestion = (suggestionId: string) => {
     let newReport = { ...report };
     // remove it from the report
-    newReport.messages = report.messages.filter(
+    newReport.messages = report?.messages.filter(
       (suggestion) => suggestion.name !== suggestionId
     );
 
-    setReport(newReport);
-    let newDismissedSuggestions = [...dismissedSuggestions];
+    setReport(newReport as types.report);
+    let newDismissedSuggestions: string[] = [...dismissedSuggestions];
     newDismissedSuggestions.push(suggestionId);
 
     // This way it stays hidden even after relint
     setDismissedSuggestions(newDismissedSuggestions);
   };
 
-  const handleSuggestionClick = (index) => {
+  const handleSuggestionClick = (index: number) => {
     setActiveSuggestionIndex(index)
   }
 
   const availableSuggestionsHidden = () => {
-    const suggestionsAvailable = report?.messages?.length > 0
     let output = false
 
-    if (suggestionsAvailable) {
+    if (suggestionsAvailable()) {
       // for every suggestion
-      report.messages.forEach((message) => {
+      report?.messages.forEach((message) => {
         // does it's id match any of the dismissed suggestions
         dismissedSuggestions.some(dismissedSuggestion => {
           dismissedSuggestion !== message.name
@@ -171,7 +183,7 @@ function LanguageLinter(props) {
     }
   }
 
-  const defaultAddToDictionary = (wordToAdd, suggestionId) => {
+  const defaultAddToDictionary = (wordToAdd: string, suggestionId: string) => {
     let languageLinterCustomDictionary = window.localStorage?.languageLinterCustomDictionary
 
     // if the local storage variable already exists
@@ -190,7 +202,6 @@ function LanguageLinter(props) {
 
   const renderPlaceholder = () => {
     const sampleTextProvided = sampleText !== ''
-    const suggestionsAvailable = report?.messages?.length > 0
 
     if (!sampleTextProvided) {
       return(
@@ -200,7 +211,7 @@ function LanguageLinter(props) {
       )
     } else if (isLoading) {
       return(<img className="loading-spinner" src={spinner} alt="loading..." />)
-    } else if ((sampleTextProvided && !suggestionsAvailable) || (availableSuggestionsHidden() && sampleTextProvided)) {
+    } else if ((sampleTextProvided && !suggestionsAvailable()) || (availableSuggestionsHidden() && sampleTextProvided)) {
       return(
         <>
           <h3 className="empty-state-heading">
@@ -216,10 +227,15 @@ function LanguageLinter(props) {
     }
   }
 
+  const suggestionsAvailable = ():boolean => {
+    const suggestionsCount = report?.messages?.length ?? 0
+    return suggestionsCount > 0
+  }
+
   return (
     <>
       {availableSuggestionsHidden()}
-      {report?.messages?.length > 0 ? (
+      {suggestionsAvailable() ? (
         <ul className="suggestion-list">{renderReport()}</ul>
       ) : (
         <div className="suggestions-empty-state">
@@ -229,14 +245,5 @@ function LanguageLinter(props) {
     </>
   );
 }
-
-LanguageLinter.propTypes = {
-  sampleText: PropTypes.string,
-  placeholder: PropTypes.string,
-  setSampleText: PropTypes.func,
-  updateTimer: PropTypes.number,
-  customDictionary: PropTypes.array,
-  addToDictionary: PropTypes.func,
-};
 
 export default LanguageLinter;

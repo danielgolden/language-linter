@@ -4,6 +4,7 @@
   "description": "A linter for natural language in the style of grammarly.",
   "main": "./lib/LanguageLinter.js",
   "scripts": {
+    "watch": "webpack watch",
     "prepublish": "rm -rf ./lib && npm run build",
     "build": "webpack"
   },
@@ -39,10 +40,36 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
-  "dependancies": {
+  "devDependencies": {
+    "@babel/core": "^7.16.12",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-stage-0": "^7.8.3",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.11",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.6.0",
     "dictionary-en": "^3.1.0",
+    "path": "^0.12.7",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "5.0.0",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.2.6",
+    "unified": "^10.1.1",
+    "url-loader": "^4.1.1",
+    "vfile-reporter-json": "^3.1.0",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "dependencies": {
+    "dictionary-en": "^3.1.0",
+    "match-casing": "^2.0.1",
     "react-scripts": "5.0.0",
     "retext": "^8.1.0",
+    "retext-capitalization": "^1.1.2",
     "retext-contractions": "^5.2.0",
     "retext-english": "^4.1.0",
     "retext-equality": "^6.6.0",
@@ -54,46 +81,8 @@
     "retext-sentence-spacing": "^5.2.0",
     "retext-spell": "^5.1.0",
     "retext-stringify": "^3.1.0",
-    "retext-capitalization": "^1.1.2",
     "retext-use-contractions": "^1.0.1",
     "unified": "^10.1.1",
-    "vfile-reporter-json": "^3.1.0",
-    "match-casing": "^2.0.1"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.16.12",
-    "@babel/preset-env": "^7.16.11",
-    "@babel/preset-react": "^7.16.7",
-    "@babel/preset-stage-0": "^7.8.3",
-    "babel-loader": "^8.2.3",
-    "css-loader": "^6.6.0",
-    "dictionary-en": "^3.1.0",
-    "path": "^0.12.7",
-    "prop-types": "^15.8.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "5.0.0",
-    "style-loader": "^3.3.1",
-    "unified": "^10.1.1",
-    "url-loader": "^4.1.1",
-    "vfile-reporter-json": "^3.1.0",
-    "webpack": "^5.68.0",
-    "webpack-cli": "^4.9.2"
-  },
-  "dependencies": {
-    "retext": "^8.1.0",
-    "retext-capitalization": "^1.1.4",
-    "retext-contractions": "^5.2.0",
-    "retext-english": "^4.1.0",
-    "retext-equality": "^6.6.0",
-    "retext-indefinite-article": "^4.1.0",
-    "retext-no-emojis": "^1.0.2",
-    "retext-passive": "^4.2.0",
-    "retext-readability": "^7.2.0",
-    "retext-repeated-words": "^4.2.0",
-    "retext-sentence-spacing": "^5.2.0",
-    "retext-spell": "^5.1.0",
-    "retext-stringify": "^3.1.0",
-    "retext-use-contractions": "^1.1.2"
+    "vfile-reporter-json": "^3.1.0"
   }
 }
