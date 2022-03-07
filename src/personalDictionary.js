@@ -91,4 +91,5 @@ export const dictionaryContents = [
   "github",
   "trello",
   "asana",
+  "integrations"
 ];

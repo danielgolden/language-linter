@@ -314,7 +314,7 @@ function Suggestion(props) {
 
         return (
           <>
-            {highlightText(suggestion.actual)} {` `} may be insensitive.
+            {highlightText(suggestion.actual)} {` `} may be insensitive.{` `}
             {secondSentence}
           </>
         );
