@@ -542,6 +542,14 @@ function Suggestion(props) {
     removeSuggestion(suggestion.name);
   }
 
+  const suggestionActualWithLengthLimit = () => {
+    if (suggestion.actual.length > 50) {
+      return suggestion.actual.substring(0, 50) + '...'
+    } else {
+      return suggestion.actual
+    }
+  }
+
   return (
     <li
       className={`suggestion-container ${
@@ -551,7 +559,9 @@ function Suggestion(props) {
     >
       <div className="active-suggestion-summary">
         <span className={`suggestion-rule-severity ${ruleSeverity()}`}></span>
-        <h5 className="suggestion-rule-actual">{suggestion.actual}</h5>
+        <h5 className="suggestion-rule-actual">
+          {suggestionActualWithLengthLimit()}
+        </h5>
         <h6 className="suggestion-rule-label">{ruleLabel()}</h6>
       </div>
 
