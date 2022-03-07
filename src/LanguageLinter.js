@@ -47,6 +47,10 @@ export function lintMyText(textToBeLinted, customLocalDictionary) {
     max: 5,
   };
 
+  const retextEqualityOptions = { 
+    ignore: ['disabled', 'host', 'hosts', 'invalid', 'just'] 
+  }
+
   let output = 'untouched'
 
   return retext()
@@ -57,7 +61,7 @@ export function lintMyText(textToBeLinted, customLocalDictionary) {
     // https://github.com/newrelic/new-relic-language-linter/issues/2
     .use(retextRepeatedWords)
     .use(retextIndefiniteArticle)
-    .use(retextEquality)
+    .use(retextEquality, retextEqualityOptions)
     .use(retextUseContractions)
     .use(retextCapitalization)
     .use(retextNoEmojis)
