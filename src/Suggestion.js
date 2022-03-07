@@ -543,8 +543,8 @@ function Suggestion(props) {
   }
 
   const suggestionActualWithLengthLimit = () => {
-    if (suggestion.actual.length > 50) {
-      return suggestion.actual.substring(0, 50) + '...'
+    if (suggestion.actual.length > 30) {
+      return suggestion.actual.substring(0, 30) + '...'
     } else {
       return suggestion.actual
     }
