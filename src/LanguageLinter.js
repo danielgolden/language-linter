@@ -87,6 +87,7 @@ function LanguageLinter(props) {
     placeholder = 'Provide some text to get started',
     customDictionary, 
     addToDictionary,
+    openLinksInNewTab = false
   } = props;
 
   useEffect(() => {
@@ -126,6 +127,7 @@ function LanguageLinter(props) {
             isActive={index === activeSuggestionIndex}
             onClick={() => handleSuggestionClick(index)}
             addToDictionary={addToDictionary ? addToDictionary : defaultAddToDictionary}
+            openLinksInNewTab={openLinksInNewTab}
           />
         );
       });
@@ -209,7 +211,10 @@ function LanguageLinter(props) {
           <p className="empty-state-description">
             We ran several checks on your text and found no writing issues.
             Think we missed something? {` `}
-            <a href="https://newrelic.slack.com/archives/C01A76P3DPU">Let us know</a>.
+            <a 
+              href="https://newrelic.slack.com/archives/C01A76P3DPU"
+              target={openLinksInNewTab ? '_blank' : '_self'}
+            >Let us know</a>.
           </p>
         </>
       )
@@ -237,6 +242,7 @@ LanguageLinter.propTypes = {
   updateTimer: PropTypes.number,
   customDictionary: PropTypes.array,
   addToDictionary: PropTypes.func,
+  openLinksInNewTab: PropTypes.bool,
 };
 
 export default LanguageLinter;

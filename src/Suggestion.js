@@ -20,6 +20,7 @@ function Suggestion(props) {
     onClick,
     isActive,
     addToDictionary,
+    openLinksInNewTab
   } = props;
 
   const [deleteIsHovered, setDeleteIsHovered] = useState(false);
@@ -344,7 +345,10 @@ function Suggestion(props) {
           <>
             Avoid using emojis in UI text. If you have the urge to use an emoji
             , consult {` `}
-            <a href="https://one-core.datanerd.us/foundation/design/writing/">
+            <a 
+              href="https://one-core.datanerd.us/foundation/design/writing/"
+              target={openLinksInNewTab ? '_blank' : '_self'}
+            >
               our docs for voice and tone
             </a>{" "}
             to rewrite your message until it achieves your goal.
@@ -435,7 +439,11 @@ function Suggestion(props) {
       );
     } else {
       return (
-        <a className="suggestion-cta-secondary" href={learnMoreLink}>
+        <a 
+          className="suggestion-cta-secondary" 
+          href={learnMoreLink}
+          target={openLinksInNewTab ? '_blank' : '_self'}
+        >
           <img
             src={IconHelp}
             alt="Help icon"
