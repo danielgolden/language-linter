@@ -4,7 +4,7 @@ import LanguageLinter, { lintMyText } from 'new-relic-language-linter/src/Langua
 import './App.css'
 
 function App() {
-  const [sampleText, setSampleText] = useState('This is the greatest I am I dog New Relic I/O');
+  const [sampleText, setSampleText] = useState(`We All like To Capitalize, Don't we? I Know I Do.`);
   const [blessed, setBlessed] = useState('');
 
   const handleTextAreaOnChange = (event) => {

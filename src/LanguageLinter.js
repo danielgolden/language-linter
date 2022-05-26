@@ -14,27 +14,30 @@ import retextContractions from "retext-contractions";
 import retextEquality from "retext-equality";
 import retextSpell from "retext-spell";
 import retextUseContractions from "retext-use-contractions";
+import retextPos from "retext-pos";
 import retextCapitalization from "retext-capitalization";
 import retextNoEmojis from "retext-no-emojis";
 import en_us_aff from "./en_aff.js";
 import en_us_dic from "./en_dic.js";
 import { dictionaryContents as personalDictionary } from "./personalDictionary";
-import spinner from "./images/tail-spin.svg"
+import spinner from "./images/tail-spin.svg";
 
 import "./Components.css";
 
 export function lintMyText(textToBeLinted, customLocalDictionary) {
-  let customDictionary = personalDictionary
+  let customDictionary = personalDictionary;
 
   if (!customLocalDictionary) {
     if (window?.localStorage?.languageLinterCustomDictionary) {
-      customLocalDictionary = JSON.parse(window.localStorage?.languageLinterCustomDictionary)
+      customLocalDictionary = JSON.parse(
+        window.localStorage?.languageLinterCustomDictionary
+      );
     } else {
-      customLocalDictionary = []
+      customLocalDictionary = [];
     }
   }
-    
-  customDictionary.push(...customLocalDictionary)
+
+  customDictionary.push(...customLocalDictionary);
 
   const retextSpellOptions = {
     dictionary: (callback) => {
@@ -43,18 +46,18 @@ export function lintMyText(textToBeLinted, customLocalDictionary) {
         dic: en_us_dic,
       });
     },
-    personal: customDictionary.join('\n'),
+    personal: customDictionary.join("\n"),
     max: 5,
   };
 
-  const retextEqualityOptions = { 
-    ignore: ['disabled', 'host', 'hosts', 'invalid', 'just'] 
-  }
+  const retextEqualityOptions = {
+    ignore: ["disabled", "host", "hosts", "invalid", "just"],
+  };
 
-  let output = 'untouched'
+  let output = "untouched";
 
-  return retext()
-    .use(retextContractions)
+  return (
+    retext()
     .use(retextSpell, retextSpellOptions)
     // It's important to use retextRepeatedWords _before_
     // retextIndefiniteArticle. See why:
@@ -63,17 +66,21 @@ export function lintMyText(textToBeLinted, customLocalDictionary) {
     .use(retextIndefiniteArticle)
     .use(retextEquality, retextEqualityOptions)
     .use(retextUseContractions)
+    .use(retextPos)
     .use(retextCapitalization)
     .use(retextNoEmojis)
     .use(retextReadability, { age: 19 })
     .use(retextSentenceSpacing)
     .use(retextPassive)
+    .use(retextContractions)
     .use(retextStringify)
-    .process(textToBeLinted)
-    .then((report) => {
-      output = report
-      return(report)
-    });
+      .process(textToBeLinted)
+      .then((report) => {
+        output = report;
+        console.log(output.messages);
+        return report;
+      })
+  );
 }
 
 function LanguageLinter(props) {
@@ -84,20 +91,20 @@ function LanguageLinter(props) {
   const [isLoading, setIsLoading] = useState();
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0);
 
-  const { 
-    sampleText, 
-    setSampleText, 
+  const {
+    sampleText,
+    setSampleText,
     updateTimer = 300,
-    placeholder = 'Provide some text to get started',
-    customDictionary, 
+    placeholder = "Provide some text to get started",
+    customDictionary,
     addToDictionary,
-    openLinksInNewTab = false
+    openLinksInNewTab = false,
   } = props;
 
   useEffect(() => {
     setTextareaChangeTimer(
       setTimeout(async () => {
-        setReport(await lintMyText(sampleText, customDictionary))
+        setReport(await lintMyText(sampleText, customDictionary));
       }, updateTimer)
     );
 
@@ -105,11 +112,11 @@ function LanguageLinter(props) {
   }, [sampleText]);
 
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
 
     setLoadingResultsTimer(
       setTimeout(async () => {
-        setIsLoading(false)
+        setIsLoading(false);
       }, 4000)
     );
 
@@ -117,6 +124,7 @@ function LanguageLinter(props) {
   }, [sampleText]);
 
   const renderReport = () => {
+    console.log(report);
     if (report?.messages?.length > 0) {
       return report.messages.map((suggestion, index) => {
         return (
@@ -130,13 +138,15 @@ function LanguageLinter(props) {
             dismissedSuggestions={dismissedSuggestions}
             isActive={index === activeSuggestionIndex}
             onClick={() => handleSuggestionClick(index)}
-            addToDictionary={addToDictionary ? addToDictionary : defaultAddToDictionary}
+            addToDictionary={
+              addToDictionary ? addToDictionary : defaultAddToDictionary
+            }
             openLinksInNewTab={openLinksInNewTab}
           />
         );
       });
     } else {
-      return <h4>No suggestions to show...</h4>
+      return <h4>No suggestions to show...</h4>;
     }
   };
 
@@ -156,74 +166,83 @@ function LanguageLinter(props) {
   };
 
   const handleSuggestionClick = (index) => {
-    setActiveSuggestionIndex(index)
-  }
+    setActiveSuggestionIndex(index);
+  };
 
   const availableSuggestionsHidden = () => {
-    const suggestionsAvailable = report?.messages?.length > 0
-    let output = false
+    const suggestionsAvailable = report?.messages?.length > 0;
+    let output = false;
 
     if (suggestionsAvailable) {
       // for every suggestion
       report.messages.forEach((message) => {
         // does it's id match any of the dismissed suggestions
-        dismissedSuggestions.some(dismissedSuggestion => {
-          dismissedSuggestion !== message.name
-          output = true
-        })
-      })
+        dismissedSuggestions.some((dismissedSuggestion) => {
+          dismissedSuggestion !== message.name;
+          output = true;
+        });
+      });
 
-      return output
+      return output;
     }
-  }
+  };
 
   const defaultAddToDictionary = (wordToAdd, suggestionId) => {
-    let languageLinterCustomDictionary = window.localStorage?.languageLinterCustomDictionary
+    let languageLinterCustomDictionary =
+      window.localStorage?.languageLinterCustomDictionary;
 
     // if the local storage variable already exists
     if (languageLinterCustomDictionary) {
-      let tempDictionaryStorage = JSON.parse(window.localStorage.languageLinterCustomDictionary)
+      let tempDictionaryStorage = JSON.parse(
+        window.localStorage.languageLinterCustomDictionary
+      );
 
-      tempDictionaryStorage.push(wordToAdd)
-      window.localStorage.setItem('languageLinterCustomDictionary', JSON.stringify(tempDictionaryStorage))
+      tempDictionaryStorage.push(wordToAdd);
+      window.localStorage.setItem(
+        "languageLinterCustomDictionary",
+        JSON.stringify(tempDictionaryStorage)
+      );
     } else {
       // if not
-      window.localStorage.setItem('languageLinterCustomDictionary', JSON.stringify([wordToAdd]))
+      window.localStorage.setItem(
+        "languageLinterCustomDictionary",
+        JSON.stringify([wordToAdd])
+      );
     }
 
-    removeSuggestion(suggestionId)
-  }
+    removeSuggestion(suggestionId);
+  };
 
   const renderPlaceholder = () => {
-    const sampleTextProvided = sampleText !== ''
-    const suggestionsAvailable = report?.messages?.length > 0
+    const sampleTextProvided = sampleText !== "";
+    const suggestionsAvailable = report?.messages?.length > 0;
 
     if (!sampleTextProvided) {
-      return(
-        <h3 className="empty-state-heading">
-         {placeholder}
-        </h3>
-      )
+      return <h3 className="empty-state-heading">{placeholder}</h3>;
     } else if (isLoading) {
-      return(<img className="loading-spinner" src={spinner} alt="loading..." />)
-    } else if ((sampleTextProvided && !suggestionsAvailable) || (availableSuggestionsHidden() && sampleTextProvided)) {
-      return(
+      return <img className="loading-spinner" src={spinner} alt="loading..." />;
+    } else if (
+      (sampleTextProvided && !suggestionsAvailable) ||
+      (availableSuggestionsHidden() && sampleTextProvided)
+    ) {
+      return (
         <>
-          <h3 className="empty-state-heading">
-           No issues found
-          </h3>
+          <h3 className="empty-state-heading">No issues found</h3>
           <p className="empty-state-description">
             We ran several checks on your text and found no writing issues.
             Think we missed something? {` `}
-            <a 
+            <a
               href="https://newrelic.slack.com/archives/C01A76P3DPU"
-              target={openLinksInNewTab ? '_blank' : '_self'}
-            >Let us know</a>.
+              target={openLinksInNewTab ? "_blank" : "_self"}
+            >
+              Let us know
+            </a>
+            .
           </p>
         </>
-      )
+      );
     }
-  }
+  };
 
   return (
     <>
@@ -231,9 +250,7 @@ function LanguageLinter(props) {
       {report?.messages?.length > 0 ? (
         <ul className="suggestion-list">{renderReport()}</ul>
       ) : (
-        <div className="suggestions-empty-state">
-          {renderPlaceholder()}
-        </div>
+        <div className="suggestions-empty-state">{renderPlaceholder()}</div>
       )}
     </>
   );
