@@ -34,6 +34,7 @@ export const dictionaryContents = [
   "redis",
   "SDK",
   "API",
+  "APIs",
   "kafka",
   "S3",
   "vpn/php",
@@ -91,5 +92,6 @@ export const dictionaryContents = [
   "github",
   "trello",
   "asana",
-  "integrations"
+  "integrations",
+  "300m"
 ];

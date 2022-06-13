@@ -48,6 +48,7 @@ export function lintMyText(textToBeLinted, customLocalDictionary) {
     },
     personal: customDictionary.join("\n"),
     max: 5,
+    ignoreDigits: true
   };
 
   const retextEqualityOptions = {

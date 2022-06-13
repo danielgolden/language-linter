@@ -1,4 +1,10 @@
 /*!
+     * Checks if the provided capitalized word is already a part of a suggestion
+     * @param {Object} word - the current word object
+     * @return {Boolean} Whether it already exists as a suggestion
+     */
+
+/*!
  * Determine if an object is a Buffer
  *
  * @author   Feross Aboukhadijeh <https://feross.org>
