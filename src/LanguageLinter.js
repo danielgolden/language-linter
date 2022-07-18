@@ -70,7 +70,7 @@ export function lintMyText(textToBeLinted, customLocalDictionary) {
     .use(retextPos)
     .use(retextCapitalization)
     .use(retextNoEmojis)
-    .use(retextReadability, { age: 19 })
+    .use(retextReadability, { age: 16 })
     .use(retextSentenceSpacing)
     .use(retextPassive)
     .use(retextContractions)
