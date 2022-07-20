@@ -113,6 +113,39 @@ function LanguageLinter(props) {
   }, [sampleText]);
 
   useEffect(() => {
+    if (report?.messages?.length > 0) {
+      const suggestionCount = report.messages.length
+
+      function handleKeyDown(e) {
+        if (e.key === "ArrowDown") {
+          setActiveSuggestionIndex((prevState) => {
+            if (prevState < suggestionCount - 1) {
+              return prevState + 1
+            }
+            
+            return prevState;
+          })
+        } else if (e.key === 'ArrowUp') {
+          setActiveSuggestionIndex((prevState) => {
+            if (prevState > 0) {
+              return prevState - 1
+            }
+  
+            return prevState;
+          })
+        }
+      }
+  
+      document.addEventListener('keydown', handleKeyDown);
+  
+      // Don't forget to clean up
+      return function cleanup() {
+        document.removeEventListener('keydown', handleKeyDown);
+      }
+    }
+  }, [report]);
+
+  useEffect(() => {
     setIsLoading(true);
     loadingStateListener(true);
 
@@ -251,7 +284,11 @@ function LanguageLinter(props) {
     <>
       {availableSuggestionsHidden()}
       {report?.messages?.length > 0 ? (
-        <ul className="suggestion-list">{renderReport()}</ul>
+        <ul
+          className="suggestion-list"
+        >
+          {renderReport()}
+        </ul>
       ) : (
         <div className="suggestions-empty-state">{renderPlaceholder()}</div>
       )}
