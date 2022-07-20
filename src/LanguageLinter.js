@@ -78,7 +78,6 @@ export function lintMyText(textToBeLinted, customLocalDictionary) {
       .process(textToBeLinted)
       .then((report) => {
         output = report;
-        console.log(output.messages);
         return report;
       })
   );
@@ -100,6 +99,7 @@ function LanguageLinter(props) {
     customDictionary,
     addToDictionary,
     openLinksInNewTab = false,
+    loadingStateListener,
   } = props;
 
   useEffect(() => {
@@ -114,10 +114,12 @@ function LanguageLinter(props) {
 
   useEffect(() => {
     setIsLoading(true);
+    loadingStateListener(true);
 
     setLoadingResultsTimer(
       setTimeout(async () => {
         setIsLoading(false);
+        loadingStateListener(false);
       }, 4000)
     );
 
@@ -125,8 +127,8 @@ function LanguageLinter(props) {
   }, [sampleText]);
 
   const renderReport = () => {
-    console.log(report);
     if (report?.messages?.length > 0) {
+      loadingStateListener(false);
       return report.messages.map((suggestion, index) => {
         return (
           <Suggestion
@@ -265,6 +267,7 @@ LanguageLinter.propTypes = {
   customDictionary: PropTypes.array,
   addToDictionary: PropTypes.func,
   openLinksInNewTab: PropTypes.bool,
+  loadingStateListener: PropTypes.func,
 };
 
 export default LanguageLinter;

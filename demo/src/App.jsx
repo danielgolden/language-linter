@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import logo from './logo.svg'
 import LanguageLinter, { lintMyText } from 'new-relic-language-linter/src/LanguageLinter'
 import './App.css'
@@ -6,6 +6,7 @@ import './App.css'
 function App() {
   const [sampleText, setSampleText] = useState(`We All like To Capitalize, Don't we? I Know I Do.`);
   const [blessed, setBlessed] = useState('');
+  const [linterIsLoading, setLinterIsLoading] = useState(false);
 
   const handleTextAreaOnChange = (event) => {
     setSampleText(event.target.value);
@@ -55,11 +56,14 @@ function App() {
         onChange={(e) => handleTextAreaOnChange(e)}  
         value={sampleText}
       />
+      
+      {`isLoading === ${linterIsLoading}`}
 
       <LanguageLinter 
         sampleText={sampleText} 
         setSampleText={setSampleText} 
         placeholder={"Enter some text to get started"}
+        loadingStateListener={setLinterIsLoading}
         // addToDictionary={myAddToDictionary}
       />
     </div>
