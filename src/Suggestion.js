@@ -155,6 +155,12 @@ function Suggestion(props) {
       const firstLetterOfOffender = suggestion.actual.substring(0, 1);
       const offenderIsUpperCase =
         firstLetterOfOffender === firstLetterOfOffender.toUpperCase();
+      
+      const handleEnterPress = (e, replacement) => {
+        if (e.key === "Enter") {
+          handleReplacementClick(replacement)
+        }
+      }
 
       return suggestion?.expected?.map((replacement, index) => {
         const replacementOutput = suggestion.source === 'retext-capitalization' ?
@@ -166,7 +172,9 @@ function Suggestion(props) {
             <span
               className={`suggestion-summary-replacement`}
               onClick={() => handleReplacementClick(replacement)}
+              onKeyDown={(e) => handleEnterPress(e, replacement)}
               key={index}
+              tabindex="0"
             >
               {replacementOutput}
             </span>
