@@ -147,12 +147,12 @@ function LanguageLinter(props) {
 
   useEffect(() => {
     setIsLoading(true);
-    loadingStateListener(true);
+    if (loadingStateListener) loadingStateListener(true);
 
     setLoadingResultsTimer(
       setTimeout(async () => {
         setIsLoading(false);
-        loadingStateListener(false);
+        if (loadingStateListener) loadingStateListener(false);
       }, 4000)
     );
 
@@ -161,7 +161,7 @@ function LanguageLinter(props) {
 
   const renderReport = () => {
     if (report?.messages?.length > 0) {
-      loadingStateListener(false);
+      if (loadingStateListener) loadingStateListener(false);
       return report.messages.map((suggestion, index) => {
         return (
           <Suggestion
