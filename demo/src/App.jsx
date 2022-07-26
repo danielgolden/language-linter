@@ -57,7 +57,6 @@ function App() {
         value={sampleText}
       />
       
-      {`isLoading === ${linterIsLoading}`}
 
       <LanguageLinter 
         sampleText={sampleText} 

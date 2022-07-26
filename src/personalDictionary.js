@@ -1,5 +1,5 @@
-// List originally pulled from https://en.wikipedia.org/wiki/Wikipedia:List_of_English_contractions
 export const dictionaryContents = [
+  "customizable",
   "New Relic",
   "New Relic One",
   "nerdgraph",
@@ -9,6 +9,9 @@ export const dictionaryContents = [
   "Figma",
   "UI",
   "Node.js",
+  "NPM",
+  "JVM",
+  "apm",
   "APM",
   "serverless",
   "kubernetes",
@@ -93,5 +96,19 @@ export const dictionaryContents = [
   "trello",
   "asana",
   "integrations",
-  "300m"
+  "300m",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+  "uncheck",
+  "pre-populated",
+  "CDN",
 ];

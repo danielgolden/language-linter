@@ -52,7 +52,7 @@ export function lintMyText(textToBeLinted, customLocalDictionary) {
   };
 
   const retextEqualityOptions = {
-    ignore: ["disabled", "host", "hosts", "invalid", "just"],
+    ignore: ["disabled", "host", "hosts", "invalid", "just", "special"],
   };
 
   let output = "untouched";
