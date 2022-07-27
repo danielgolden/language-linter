@@ -63,7 +63,7 @@
     "install": "^0.13.0",
     "npm": "^8.10.0",
     "retext": "^8.1.0",
-    "retext-capitalization": "^1.2.5",
+    "retext-capitalization": "^1.2.6",
     "retext-contractions": "^5.2.0",
     "retext-english": "^4.1.0",
     "retext-equality": "^6.6.0",
