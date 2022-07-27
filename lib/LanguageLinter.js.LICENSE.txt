@@ -1,4 +1,11 @@
 /*!
+         *  Checks if the provided word is the first in the sentence
+         *  @param {Array} words - A collection of the words in the sentence
+         *  @param {Object} word - the word object in question
+         *  @return {Boolean} Whether it a proper noun
+         */
+
+/*!
      * Checks if the provided capitalized word is already a part of a suggestion
      * @param {Object} word - the current word object
      * @return {Boolean} Whether it already exists as a suggestion

@@ -163,9 +163,13 @@ function Suggestion(props) {
       }
 
       return suggestion?.expected?.map((replacement, index) => {
-        const replacementOutput = suggestion.source === 'retext-capitalization' ?
-          suggestion.expected[index] :
-          matchCasing(replacement, suggestion.actual)
+        const replacementOutput = (() => {
+          if (suggestion.source === 'retext-capitalization' || suggestion.source === 'retext-spell') {
+            return suggestion.expected[index];
+          }
+          
+          return matchCasing(replacement, suggestion.actual);
+        })()
 
         if (index < maxReplacementCount) {
           return (
