@@ -76,6 +76,6 @@
     "retext-sentence-spacing": "^5.2.0",
     "retext-spell": "^5.1.0",
     "retext-stringify": "^3.1.0",
-    "retext-use-contractions": "^1.1.3"
+    "retext-use-contractions": "^1.1.4"
   }
 }
