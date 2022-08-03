@@ -13,5 +13,6 @@ npm i new-relic-language-linter
 
 ### Video preview
 A preview of the package in action in a Figma plugin and on the web
+
 https://user-images.githubusercontent.com/812989/182592615-7546f2b0-bd7d-4a6f-9a64-8d6eceb3810d.mp4
 
