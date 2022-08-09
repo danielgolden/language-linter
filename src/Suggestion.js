@@ -264,7 +264,7 @@ function Suggestion(props) {
           <>
             The word {highlightText(suggestion.actual)} is not in our
             dictionary. If you’re sure this spelling is correct, you can suggest
-            we add it to the dicitonary to prevent future alerts.
+            we add it to the dictionary to prevent future alerts.
           </>
         );
       case "retext-contractions":
